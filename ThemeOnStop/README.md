@@ -9,4 +9,4 @@
 
 **结论**
 
-系统是否调用前一个被覆盖 Activity 的 onStop 方法只取决于覆盖 Activity 在 AndroidManifest.xml 中声明的主题是否透明，而与代码调用 setTheme 设置主题无关
+系统是否调用前一个被覆盖 `Activity` 的 `onStop` 方法只取决于覆盖 `Activity` 在 `AndroidManifest.xml` 中声明的主题是否透明，而与代码调用 `setTheme` 设置的主题无关
