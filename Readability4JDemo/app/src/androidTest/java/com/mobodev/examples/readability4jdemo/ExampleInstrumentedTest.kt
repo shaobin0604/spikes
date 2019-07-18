@@ -65,7 +65,10 @@ class ExampleInstrumentedTest {
 
     @Test
     fun readability4j_should_parse_medium() {
+        val url = "https://blog.medium.com/read-time-and-you-bc2048ab620c"
+        val article = parseToArticle(url)
 
+        Log.v(TAG, "medium article: ${article.toS()}")
     }
 
     private fun parseToArticle(url: String): Article {
