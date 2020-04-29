@@ -1,0 +1,3 @@
+rootProject.name='Wave Progress TextView'
+include ':app'
+include ':waveprogresstextview'

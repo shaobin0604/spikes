@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Wave Progress TextView</string>
+    <string name="loading">请保持姿势</string>
+    <string name="show_wave">显示波浪</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WaveProgressTextView">
+        <attr name="waveDrawable" format="reference" />
+        <attr name="waveColor" format="color|reference" />
+    </declare-styleable>
+</resources>
