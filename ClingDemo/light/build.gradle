@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.mobodev.spikes.clingdemo.light"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/beans.xml'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+
+    // Cling library
+    compile 'org.fourthline.cling:cling-core:2.1.1'
+    compile 'org.fourthline.cling:cling-support:2.1.1'
+    // Jetty library
+    compile 'org.eclipse.jetty:jetty-server:8.1.12.v20130726'
+    compile 'org.eclipse.jetty:jetty-servlet:8.1.12.v20130726'
+    compile 'org.eclipse.jetty:jetty-client:8.1.12.v20130726'
+    compile 'org.slf4j:slf4j-simple:1.7.21'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
