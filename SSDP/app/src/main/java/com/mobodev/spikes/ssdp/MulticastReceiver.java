@@ -62,21 +62,11 @@ public class MulticastReceiver implements Runnable {
 
                 socket.receive(datagram);
 
-                InetAddress receivedOnLocalAddress =
-                        networkAddressFactory.getLocalAddress(
-                                multicastInterface,
-                                multicastAddress.getAddress() instanceof Inet6Address,
-                                datagram.getAddress()
-                        );
-
-                log.fine(
+                Log.i(TAG,
                         "UDP datagram received from: " + datagram.getAddress().getHostAddress()
-                                + ":" + datagram.getPort()
-                                + " on local interface: " + multicastInterface.getDisplayName()
-                                + " and address: " + receivedOnLocalAddress.getHostAddress()
-                );
+                                + ":" + datagram.getPort());
 
-                router.received(datagramProcessor.read(receivedOnLocalAddress, datagram));
+//                router.received(datagramProcessor.read(receivedOnLocalAddress, datagram));
 
             } catch (SocketException ex) {
                 Log.w(TAG, "Socket closed");

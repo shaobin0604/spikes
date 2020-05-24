@@ -7,6 +7,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
+import java.util.logging.Level;
 
 public class DatagramIO implements Runnable {
     private static final String TAG = "DatagramIO";
@@ -56,7 +57,7 @@ public class DatagramIO implements Runnable {
                 );
 
 
-                router.received(datagramProcessor.read(localAddress.getAddress(), datagram));
+//                router.received(datagramProcessor.read(localAddress.getAddress(), datagram));
 
             } catch (SocketException ex) {
                 Log.w(TAG, "Socket closed");
@@ -72,6 +73,20 @@ public class DatagramIO implements Runnable {
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    synchronized public void send(DatagramPacket datagram) {
+        Log.i(TAG, "Sending message from address: " + localAddress);
+
+        try {
+            socket.send(datagram);
+        } catch (SocketException ex) {
+            Log.w(TAG, "Socket closed, aborting datagram send to: " + datagram.getAddress());
+        } catch (RuntimeException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            Log.w(TAG, "Exception sending datagram to: " + datagram.getAddress() + ": " + ex, ex);
         }
     }
 }
