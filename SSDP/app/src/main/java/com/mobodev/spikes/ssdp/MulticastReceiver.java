@@ -1,25 +1,27 @@
 package com.mobodev.spikes.ssdp;
 
+import static com.mobodev.spikes.ssdp.Constants.IPV4_UPNP_MULTICAST_GROUP;
+import static com.mobodev.spikes.ssdp.Constants.UPNP_MULTICAST_PORT;
+
 import android.util.Log;
 
 import java.net.DatagramPacket;
-import java.net.Inet6Address;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
 
 public class MulticastReceiver implements Runnable {
     private static final String TAG = "MulticastReceiver";
+    private final Router router;
+    private final DatagramProcessor datagramProcessor;
     private int maxDatagramBytes = 640;
-    public static final int UPNP_MULTICAST_PORT = 1900;
-
-    public static final String IPV4_UPNP_MULTICAST_GROUP = "239.255.255.250";
-
     protected InetSocketAddress multicastAddress;
     protected MulticastSocket socket;
 
-    public MulticastReceiver() {
+    public MulticastReceiver(Router router, DatagramProcessor datagramProcessor) {
+        this.router = router;
+        this.datagramProcessor = datagramProcessor;
+
         try {
 
             Log.i(TAG, "Creating wildcard socket (for receiving multicast datagrams) on port: " + UPNP_MULTICAST_PORT);
@@ -66,7 +68,7 @@ public class MulticastReceiver implements Runnable {
                         "UDP datagram received from: " + datagram.getAddress().getHostAddress()
                                 + ":" + datagram.getPort());
 
-//                router.received(datagramProcessor.read(receivedOnLocalAddress, datagram));
+                router.received(datagramProcessor.read(datagram));
 
             } catch (SocketException ex) {
                 Log.w(TAG, "Socket closed");

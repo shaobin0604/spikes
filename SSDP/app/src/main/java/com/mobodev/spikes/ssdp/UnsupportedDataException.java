@@ -1,19 +1,26 @@
 package com.mobodev.spikes.ssdp;
 
-public class UnsupportedDataException extends Exception {
+public class UnsupportedDataException extends RuntimeException {
 
-    public UnsupportedDataException() {
+    private static final long serialVersionUID = 661795454401413339L;
+
+    protected Object data;
+
+    public UnsupportedDataException(String s) {
+        super(s);
     }
 
-    public UnsupportedDataException(String message) {
-        super(message);
+    public UnsupportedDataException(String s, Throwable throwable) {
+        super(s, throwable);
     }
 
-    public UnsupportedDataException(String message, Throwable cause) {
-        super(message, cause);
+    public UnsupportedDataException(String s, Throwable throwable, Object data) {
+        super(s, throwable);
+        this.data = data;
     }
 
-    public UnsupportedDataException(Throwable cause) {
-        super(cause);
+    public Object getData() {
+        return data;
     }
+
 }

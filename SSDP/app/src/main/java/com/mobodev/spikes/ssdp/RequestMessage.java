@@ -1,5 +1,7 @@
 package com.mobodev.spikes.ssdp;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,5 +40,14 @@ public class RequestMessage extends Message {
             e.printStackTrace();
         }
         return jsonObject;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "RequestMessage{" +
+                "operation='" + operation + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

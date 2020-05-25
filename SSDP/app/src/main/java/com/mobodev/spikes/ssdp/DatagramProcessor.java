@@ -15,7 +15,10 @@ public class DatagramProcessor {
     public IncomingDatagramMessage read(DatagramPacket datagram) throws UnsupportedDataException {
         final byte[] data = datagram.getData();
         try {
-            String string = new String(data, "utf-8");
+            String string = new String(data, datagram.getOffset(), datagram.getLength(), "UTF-8");
+
+            Log.v(TAG, "Read new datagram packet payload: " + string);
+
             JSONObject jsonObject = new JSONObject(string);
             if (jsonObject.has("operation")) {
                 return new IncomingDatagramMessage<>(datagram.getAddress(), datagram.getPort(), new RequestMessage(jsonObject));
@@ -25,7 +28,7 @@ public class DatagramProcessor {
                 throw new UnsupportedDataException("incoming string invalid: " + string);
             }
         } catch (UnsupportedEncodingException | JSONException e) {
-            throw new UnsupportedDataException("incoming data invalid: " + Arrays.toString(data));
+            throw new UnsupportedDataException("incoming data invalid: " + Arrays.toString(data), e);
         }
     }
 

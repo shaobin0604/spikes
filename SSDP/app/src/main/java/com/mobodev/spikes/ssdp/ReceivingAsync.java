@@ -2,15 +2,17 @@ package com.mobodev.spikes.ssdp;
 
 import android.util.Log;
 
-import java.util.logging.Level;
-
 public abstract class ReceivingAsync<M extends Message> implements Runnable {
 
     private static final String TAG = "ReceivingAsync";
 
-    private M inputMessage;
+    private IncomingDatagramMessage<M> inputMessage;
 
-    public M getInputMessage() {
+    public ReceivingAsync(IncomingDatagramMessage<M> inputMessage) {
+        this.inputMessage = inputMessage;
+    }
+
+    public IncomingDatagramMessage<M> getInputMessage() {
         return inputMessage;
     }
 
@@ -29,7 +31,7 @@ public abstract class ReceivingAsync<M extends Message> implements Runnable {
             } catch (Exception ex) {
                 Throwable cause = Exceptions.unwrap(ex);
                 if (cause instanceof InterruptedException) {
-                    log.log(Level.INFO, "Interrupted protocol '" + getClass().getSimpleName() + "': " + ex, cause);
+                    Log.i(TAG, "Interrupted protocol '" + getClass().getSimpleName() + "': " + ex, cause);
                 } else {
                     throw new RuntimeException(
                             "Fatal error while executing protocol '" + getClass().getSimpleName() + "': " + ex, ex
@@ -43,7 +45,6 @@ public abstract class ReceivingAsync<M extends Message> implements Runnable {
      * Provides an opportunity to pause before executing the protocol.
      *
      * @return <code>true</code> (default) if execution should continue after waiting.
-     *
      * @throws InterruptedException If waiting has been interrupted, which also stops execution.
      */
     protected boolean waitBeforeExecution() throws InterruptedException {

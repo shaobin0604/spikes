@@ -7,11 +7,20 @@
     tools:context=".DeviceActivity">
     <Button
         android:id="@+id/btn_start_server"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="start server"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_stop_server"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_stop_server"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="stop server"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_start_server"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

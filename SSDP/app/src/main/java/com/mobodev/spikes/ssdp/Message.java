@@ -32,4 +32,5 @@ public abstract class Message {
             return new byte[0];
         }
     }
+
 }

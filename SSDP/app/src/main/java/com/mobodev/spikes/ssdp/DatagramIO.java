@@ -7,10 +7,11 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
-import java.util.logging.Level;
 
 public class DatagramIO implements Runnable {
     private static final String TAG = "DatagramIO";
+    private final DatagramProcessor datagramProcessor;
+    private final Router router;
 
     private int timeToLive = 4;
     private int maxDatagramBytes = 640;
@@ -18,7 +19,11 @@ public class DatagramIO implements Runnable {
     private MulticastSocket socket; // For sending unicast & multicast, and reveiving unicast
     private InetAddress localAddress;
 
-    public DatagramIO() {
+    public DatagramIO(Router router, DatagramProcessor datagramProcessor) {
+
+        this.router = router;
+        this.datagramProcessor = datagramProcessor;
+
         try {
             socket = new MulticastSocket(0);
             socket.setTimeToLive(timeToLive);
@@ -56,8 +61,7 @@ public class DatagramIO implements Runnable {
                                 + " on: " + localAddress
                 );
 
-
-//                router.received(datagramProcessor.read(localAddress.getAddress(), datagram));
+                router.received(datagramProcessor.read(datagram));
 
             } catch (SocketException ex) {
                 Log.w(TAG, "Socket closed");
@@ -74,6 +78,15 @@ public class DatagramIO implements Runnable {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    synchronized public void send(OutgoingDatagramMessage message) {
+            Log.v(TAG, "Sending message from address: " + localAddress);
+        DatagramPacket packet = datagramProcessor.write(message);
+
+        Log.v(TAG, "Sending UDP datagram packet to: " + message.getDestinationAddress() + ":" + message.getDestinationPort());
+
+        send(packet);
     }
 
     synchronized public void send(DatagramPacket datagram) {
