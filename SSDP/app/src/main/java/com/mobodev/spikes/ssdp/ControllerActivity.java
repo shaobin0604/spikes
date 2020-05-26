@@ -10,8 +10,8 @@ import android.view.View;
 import com.mobodev.spikes.ssdp.databinding.ActivityControllerBinding;
 
 public class ControllerActivity extends AppCompatActivity {
-    private static final int SAMPLE_COUNT = 100;
-    private static final int MAX_WAIT_SECOND = 120;
+    private static final int SAMPLE_COUNT = 5;
+    private static final int MAX_WAIT_SECOND = 30;
 
     private static final String TAG = "ControllerActivity";
 
@@ -38,6 +38,7 @@ public class ControllerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBinding.btnSearch.setEnabled(false);
+                sampleData.reset();
                 sampleData.start();
                 Globals.getInstance().getDefaultExecutorService().execute(new SendingSearch(3) {
                     @Override

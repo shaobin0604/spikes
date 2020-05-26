@@ -2,6 +2,8 @@ package com.mobodev.spikes.ssdp;
 
 import androidx.annotation.NonNull;
 
+import java.util.Arrays;
+
 public class SampleData {
     private int mCount;
 
@@ -14,6 +16,12 @@ public class SampleData {
         mCount = count;
         mSendTs = new long[mCount];
         mReceiveTs = new long[mCount];
+    }
+
+    public synchronized void reset() {
+        mRunning = false;
+        Arrays.fill(mSendTs, 0);
+        Arrays.fill(mReceiveTs, 0);
     }
 
     public synchronized void start() {
