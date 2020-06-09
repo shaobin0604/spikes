@@ -57,7 +57,7 @@ public class SampleData {
         }
 
         int lossRate = (mCount - repliedCount) * 100 / mCount;
-        int avgLatency = totalLatency / repliedCount;
+        int avgLatency = repliedCount > 0 ? totalLatency / repliedCount : Integer.MIN_VALUE;
 
         return new TestResult(lossRate, avgLatency);
     }
