@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.math.BigDecimal;
+
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -78,5 +80,8 @@ public class MainActivity extends AppCompatActivity {
         Timber.i("java.lang.String ClassLoader: %s", String.class.getClassLoader());
         Timber.i("android.app.Activity ClassLoader: %s", Activity.class.getClassLoader());
         Timber.i("androidx.appcompat.app.AppCompatActivity ClassLoader: %s", AppCompatActivity.class.getClassLoader());
+
+
+        Timber.i(new BigDecimal("1.0000000").stripTrailingZeros().toPlainString());
     }
 }
